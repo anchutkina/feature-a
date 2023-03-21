@@ -5,8 +5,7 @@ import cz.pf.array.PFArray;
 public class Main {
     public static void main(String[] args) {
 
-//        int abc[] = {2,5,10,16};
-//        PFArray pfArray = new PFArray(abc);
+
         PFArray pfArray = new PFArray(generateRandomNumbers());
 
         System.out.println(pfArray.toString());

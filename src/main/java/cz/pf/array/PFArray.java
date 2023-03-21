@@ -6,7 +6,7 @@ public class PFArray {
 
     private int[] array;
 
-    PFArray(int[] array) {
+    public PFArray(int[] array) {
         this.array = array;
     }
 
