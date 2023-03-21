@@ -1,6 +1,6 @@
-package org.example;
+package cz.pf.array;
 
-import java.util.Arrays;
+import cz.pf.Main;
 
 public class PFArray {
 

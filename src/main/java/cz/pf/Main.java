@@ -1,7 +1,6 @@
-package org.example;
+package cz.pf;
 
-import java.util.Arrays;
-import java.util.Random;
+import cz.pf.array.PFArray;
 
 public class Main {
     public static void main(String[] args) {
