@@ -5,9 +5,15 @@ import cz.pf.Main;
 public class PFArray {
 
     private int[] array;
+    private String name;
 
     public PFArray(int[] array) {
         this.array = array;
+    }
+
+    public PFArray(int[] array, String name) {
+        this.array = array;
+        this.name = name;
     }
 
 
@@ -15,9 +21,9 @@ public class PFArray {
     public String toString() {
         String result = new String();
         for (int i = 0; i < this.array.length; i++) {
-            result += this.array[i];
+            result += this.array[i] + " ";
         }
-        return result;
+        return this.name + ": " + result;
     }
 
     //Return array
@@ -105,8 +111,19 @@ public class PFArray {
 
     //Regenerating numbers in an array
     public int[] regenerateArray() {
-        this.array = Main.generateRandomNumbers();
+        this.array = Main.generateRandomNumbers(this.array.length);
         return this.array;
     }
+
+    public String setName(String nameOfArray) {
+        this.name = nameOfArray;
+        return this.name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+
 }
 
