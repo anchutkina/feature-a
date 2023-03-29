@@ -7,8 +7,9 @@ public class PFArray {
     private int[] array;
     private String name;
 
-    public PFArray(int[] array) {
-        this.array = array;
+    public PFArray() {
+        this.array = new int[]{};
+        this.name = "";
     }
 
     public PFArray(int[] array, String name) {
@@ -26,39 +27,42 @@ public class PFArray {
         return this.name + ": " + result;
     }
 
-    //Return array
-    public int[] getArray() {
-        return this.array;
+
+    public void setArray(int[] array) {
+        this.array = array;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     //Adding a number to an array
-    public int[] addNumberToArray(int newNumber) {
+    public void addNumberToArray(int newNumber) {
         int[] newArray = new int[this.array.length + 1];
         for (int i = 0; i < this.array.length; i++) {
             newArray[i] = this.array[i];
         }
         newArray[newArray.length - 1] = newNumber;
         this.array = newArray;
-
-        return this.array;
-
     }
 
     //Removing the last number from an array
-    public int[] removeNumberFromArray() {
+    public void removeNumberFromArray() {
         int[] newArray = new int[this.array.length - 1];
         for (int i = 0; i < this.array.length-1; i++) {
                 newArray[i] = this.array[i];
         }
         this.array=newArray;
-        return this.array;
     }
 
     //Removing number with selected index from an array
-    public int[] removeSelNumberFromArray(int rmIndex) {
+    public void removeSelNumberFromArray(int rmIndex) {
 
         if (this.array == null || rmIndex < 0 || rmIndex >= this.array.length) {
-            return this.array;
         }
 
         int[] newArray = new int[this.array.length - 1];
@@ -69,7 +73,6 @@ public class PFArray {
             newArray[k++]=this.array[i];
         }
         this.array=newArray;
-        return this.array;
     }
 
     //Finding the largest number in the array
@@ -104,9 +107,8 @@ public class PFArray {
     }
 
     //Deleting the entire array
-    public int[] deleteArray(){
+    public void deleteArray(){
         this.array = new int[0];
-        return this.array;
     }
 
     //Regenerating numbers in an array
@@ -115,14 +117,7 @@ public class PFArray {
         return this.array;
     }
 
-    public String setName(String nameOfArray) {
-        this.name = nameOfArray;
-        return this.name;
-    }
 
-    public String getName() {
-        return this.name;
-    }
 
 
 }
