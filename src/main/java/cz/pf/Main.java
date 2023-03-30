@@ -211,7 +211,7 @@ public class Main {
             long largeSum = arrayStorage.get(0).sumNumbers();
             String nameLargeSum = new String();
             for(PFArray i : arrayStorage) {
-                if(i.sumNumbers() > largeSum) {
+                if(i.sumNumbers() >= largeSum) {
                     largeSum = i.sumNumbers();
                     nameLargeSum = i.getName();
                 }
@@ -224,8 +224,8 @@ public class Main {
 
     }
 
-    private static int smallestSum() {
-        int smallSum = Integer.MAX_VALUE;
+    private static long smallestSum() {
+        long smallSum = Integer.MAX_VALUE;
         String nameSmallSum = new String();
         for(PFArray i : arrayStorage) {
             if(i.sumNumbers() < smallSum) {

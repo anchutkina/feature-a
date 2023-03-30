@@ -2,6 +2,10 @@ package cz.pf.array;
 
 import cz.pf.Main;
 
+import java.util.Arrays;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
+
 public class PFArray {
 
     private int[] array;
@@ -98,11 +102,8 @@ public class PFArray {
     }
 
     //The sum of all elements in the array
-    public int sumNumbers(){
-        int sum = 0;
-        for (int i=0; i < this.array.length; i++) {
-           sum = sum + this.array[i];
-        }
+    public long sumNumbers(){
+        long sum = Arrays.stream(this.array).asLongStream().sum();
         return sum;
     }
 
