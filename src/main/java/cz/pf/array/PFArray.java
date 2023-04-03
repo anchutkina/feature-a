@@ -11,10 +11,6 @@ public class PFArray {
     private int[] array;
     private String name;
 
-    public PFArray() {
-        this.array = new int[]{};
-        this.name = "";
-    }
 
     public PFArray(int[] array, String name) {
         this.array = array;
