@@ -49,9 +49,6 @@ public class Main {
                             continue;
                         }
                         PFArray pfArray = selectArray(scanner);
-                        if (pfArray == null) {
-                            continue;
-                        }
                         int actionWithArray = chooseArrayAction(scanner);
                         if (actionWithArray == ActionWithArray.PRINT_ARRAY.actionId) {
                             System.out.println(pfArray.toString() + "\n");
@@ -125,20 +122,17 @@ public class Main {
 
     private static String chooseArrayName(Scanner scanner) {
         String arrayName = "";
-        boolean isUnique = true;
-        while(arrayName.isBlank() || isUnique == false) {
-            isUnique = true;
+        while(arrayName.isBlank()) {
             System.out.println("Please provide name of array you want to create:");
             arrayName = scanner.nextLine();
-            for (PFArray i : arrayStorage) {
-                if (i.getName().equals(arrayName)) {
+            for (PFArray pfArray : arrayStorage) {
+                if (pfArray.getName().equals(arrayName)) {
                     System.err.println("Array with this name already exists. Please, type anything to return to the input of the name or type 'menu' to return to the menu");
                     String chosenOption = scanner.nextLine();
                     if(chosenOption.equals("menu")) {
                         arrayName = "menu";
-                        continue;
                     } else {
-                        isUnique = false;
+                        arrayName = "";
                     }
                 }
             }
@@ -148,14 +142,12 @@ public class Main {
 
     private static String chooseArrayType(Scanner scanner) {
         String chosenArrayType = "";
-        boolean ifCorrect = true;
-        while(chosenArrayType.isBlank() || ifCorrect == false) {
-            ifCorrect = true;
+        while(chosenArrayType.isBlank()) {
             System.out.println("Please write 'random' if you want to create array with random elements, or write 'manual' if you want to create array by yourself:");
             chosenArrayType = scanner.nextLine();
             if(!chosenArrayType.equals(RANDOM) && !chosenArrayType.equals(MANUAL)) {
                 System.err.println("The entered value is incorrect.");
-                ifCorrect = false;
+                chosenArrayType = "";
             }
         }
         return chosenArrayType;
@@ -195,20 +187,21 @@ public class Main {
     }
 
     private static PFArray selectArray(Scanner scanner) {
-        System.out.println("Existing arrays:");
-        for (PFArray i : arrayStorage) {
-            System.out.println(i.getName());
-        }
-
-        System.out.println("Type name of array you want to work with:");
-        String arrayName = scanner.nextLine();
-        for (PFArray i : arrayStorage) {
-            if (i.getName().equals(arrayName)) {
-                return i;
+        while(true) {
+            System.out.println("Existing arrays:");
+            for (PFArray pfArray : arrayStorage) {
+                System.out.println(pfArray.getName());
             }
+
+            System.out.println("Type name of array you want to work with:");
+            String arrayName = scanner.nextLine();
+            for (PFArray pfArray : arrayStorage) {
+                if (pfArray.getName().equals(arrayName)) {
+                    return pfArray;
+                }
+            }
+            System.err.println("Typed element was not found.");
         }
-        System.err.println("Typed element was not found.");
-        return null;
     }
 
     private static int chooseArrayAction(Scanner scanner) {
@@ -220,9 +213,9 @@ public class Main {
 
     private static long findLargestSum() {
         long largeSum = arrayStorage.get(0).sumNumbers();
-        for(PFArray i : arrayStorage) {
-            if(i.sumNumbers() >= largeSum) {
-                largeSum = i.sumNumbers();
+        for(PFArray pfArray : arrayStorage) {
+            if(pfArray.sumNumbers() >= largeSum) {
+                largeSum = pfArray.sumNumbers();
             }
         }
         return largeSum;
@@ -230,9 +223,9 @@ public class Main {
 
     private static long findSmallestSum() {
         long smallSum = Integer.MAX_VALUE;
-        for(PFArray i : arrayStorage) {
-            if(i.sumNumbers() < smallSum) {
-                smallSum = i.sumNumbers();
+        for(PFArray pfArray : arrayStorage) {
+            if(pfArray.sumNumbers() < smallSum) {
+                smallSum = pfArray.sumNumbers();
             }
         }
         return smallSum;
