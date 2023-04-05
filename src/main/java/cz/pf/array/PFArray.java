@@ -3,8 +3,6 @@ package cz.pf.array;
 import cz.pf.Main;
 
 import java.util.Arrays;
-import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 
 public class PFArray {
 
@@ -110,7 +108,7 @@ public class PFArray {
 
     //Regenerating numbers in an array
     public int[] regenerateArray() {
-        this.array = Main.generateRandomNumbers(this.array.length);
+        this.array = Main.generateArrayRandomly(this.array.length);
         return this.array;
     }
 
