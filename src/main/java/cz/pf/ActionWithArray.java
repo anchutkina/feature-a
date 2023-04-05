@@ -10,8 +10,8 @@ public enum ActionWithArray {
     DELETE_ARRAY(7),
     REGENERATE_ARRAY(8);
 
-    final int i;
-    ActionWithArray(int i) {
-        this.i = i;
+    final int actionId;
+    ActionWithArray(int actionId) {
+        this.actionId = actionId;
     }
 }

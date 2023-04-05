@@ -18,7 +18,7 @@ public class PFArray {
 
     //Print array
     public String toString() {
-        String result = new String();
+        String result = "";
         for (int i = 0; i < this.array.length; i++) {
             result += this.array[i] + " ";
         }

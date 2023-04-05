@@ -7,9 +7,9 @@ public enum OptionWithArray {
     SMALLEST_SUM(4),
     FINISH(5);
 
-    final int i;
-    OptionWithArray(int i) {
-        this.i = i;
+    final int optionId;
+    OptionWithArray(int optionId) {
+        this.optionId = optionId;
     }
 }
 

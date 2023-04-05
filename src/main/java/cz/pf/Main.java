@@ -22,8 +22,11 @@ public class Main {
                 int chosenOption = scanner.nextInt();
                 scanner.nextLine();
 
-                if (chosenOption == OptionWithArray.CREATE_ARRAY.i) {
+                if (chosenOption == OptionWithArray.CREATE_ARRAY.optionId) {
                     String name = chooseArrayName(scanner);
+                    if(name.equals("menu")){
+                        continue;
+                    }
                     String type = chooseArrayType(scanner);
                     if (type.equals(RANDOM)) {
                         int arraySize = chooseArraySize(scanner);
@@ -39,7 +42,7 @@ public class Main {
                         System.out.println();
                     }
 
-                } else if (chosenOption == OptionWithArray.SELECT_ARRAY.i) {
+                } else if (chosenOption == OptionWithArray.SELECT_ARRAY.optionId) {
                     try {
                         if (arrayStorage.isEmpty()) {
                             System.err.println("There is not any available array. First create array, please.");
@@ -50,29 +53,29 @@ public class Main {
                             continue;
                         }
                         int actionWithArray = chooseArrayAction(scanner);
-                        if (actionWithArray == ActionWithArray.PRINT_ARRAY.i) {
+                        if (actionWithArray == ActionWithArray.PRINT_ARRAY.actionId) {
                             System.out.println(pfArray.toString() + "\n");
-                        } else if (actionWithArray == ActionWithArray.ADD_NUMBER.i) {
+                        } else if (actionWithArray == ActionWithArray.ADD_NUMBER.actionId) {
                             System.out.println("Type number, that you want to add:" + "\n");
                             pfArray.addNumberToArray(scanner.nextInt());
                             scanner.nextLine();
                             System.out.println("Number is added. Updated array: " + pfArray.toString() + "\n");
-                        } else if (actionWithArray == ActionWithArray.REMOVE_NUMBER.i) {
+                        } else if (actionWithArray == ActionWithArray.REMOVE_NUMBER.actionId) {
                             pfArray.removeNumberFromArray();
                             System.out.println("Number is removed. Updated array: " + pfArray.toString() + "\n");
-                        } else if (actionWithArray == ActionWithArray.LARGEST_NUMBER.i) {
+                        } else if (actionWithArray == ActionWithArray.LARGEST_NUMBER.actionId) {
                             pfArray.getLargestNumber();
                             System.out.println("The largest number of selected array is: " + pfArray.getLargestNumber() + "\n");
-                        } else if (actionWithArray == ActionWithArray.SMALLEST_NUMBER.i) {
+                        } else if (actionWithArray == ActionWithArray.SMALLEST_NUMBER.actionId) {
                             pfArray.getSmallestNumber();
                             System.out.println("The smallest number of selected array is: " + pfArray.getSmallestNumber() + "\n");
-                        } else if (actionWithArray == ActionWithArray.SUM_NUMBERS.i) {
+                        } else if (actionWithArray == ActionWithArray.SUM_NUMBERS.actionId) {
                             pfArray.sumNumbers();
                             System.out.println("The sum of numbers of selected array is: " + pfArray.sumNumbers() + "\n");
-                        } else if (actionWithArray == ActionWithArray.DELETE_ARRAY.i) {
+                        } else if (actionWithArray == ActionWithArray.DELETE_ARRAY.actionId) {
                             pfArray.deleteArray();
                             System.out.println("The selected array is deleted" + "\n");
-                        } else if (actionWithArray == ActionWithArray.REGENERATE_ARRAY.i) {
+                        } else if (actionWithArray == ActionWithArray.REGENERATE_ARRAY.actionId) {
                             pfArray.regenerateArray();
                             System.out.println("Regenerated array: " + pfArray.toString() + "\n");
                         } else {
@@ -82,7 +85,7 @@ public class Main {
                         System.err.println("Provided value is incorrect. Type number, please.");
                         scanner.nextLine();
                     }
-                } else if (chosenOption == OptionWithArray.LARGEST_SUM.i) {
+                } else if (chosenOption == OptionWithArray.LARGEST_SUM.optionId) {
                     if (arrayStorage.isEmpty()) {
                         System.err.println("There is no available array to count sum. First create array, please.");
                         continue;
@@ -90,7 +93,7 @@ public class Main {
                     long largeSum = findLargestSum();
                     System.out.println("Array with the largest sum of numbers is: " + largeSum);
                     System.out.println();
-                } else if (chosenOption == OptionWithArray.SMALLEST_SUM.i) {
+                } else if (chosenOption == OptionWithArray.SMALLEST_SUM.optionId) {
                     if (arrayStorage.isEmpty()) {
                         System.err.println("There is no available array to count sum. First create array, please.");
                         continue;
@@ -98,7 +101,7 @@ public class Main {
                     long smallSum = findSmallestSum();
                     System.out.println("Array with the smallest sum of numbers is: " + smallSum);
                     System.out.println();
-                } else if (chosenOption == OptionWithArray.FINISH.i) {
+                } else if (chosenOption == OptionWithArray.FINISH.optionId) {
                     System.out.println("Goodbye");
                     System.exit(0);
                 } else {
@@ -129,8 +132,14 @@ public class Main {
             arrayName = scanner.nextLine();
             for (PFArray i : arrayStorage) {
                 if (i.getName().equals(arrayName)) {
-                    System.err.println("Array with this name already exists. Choose another name, please.\n");
-                    isUnique = false;
+                    System.err.println("Array with this name already exists. Please, type anything to return to the input of the name or type 'menu' to return to the menu");
+                    String chosenOption = scanner.nextLine();
+                    if(chosenOption.equals("menu")) {
+                        arrayName = "menu";
+                        continue;
+                    } else {
+                        isUnique = false;
+                    }
                 }
             }
         }
