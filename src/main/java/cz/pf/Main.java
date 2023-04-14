@@ -87,16 +87,16 @@ public class Main {
                         System.err.println("There is no available array to count sum. First create array, please.");
                         continue;
                     }
-                    long largeSum = findLargestSum();
-                    System.out.println("Array with the largest sum of numbers is: " + largeSum);
+                    PFArray largeSumArray = findArrayWithLargestSum();
+                    System.out.println("Array with the largest sum is: " + largeSumArray.getName()+ " with count " + largeSumArray.sumNumbers());
                     System.out.println();
                 } else if (chosenOption == OptionWithArray.SMALLEST_SUM.optionId) {
                     if (arrayStorage.isEmpty()) {
                         System.err.println("There is no available array to count sum. First create array, please.");
                         continue;
                     }
-                    long smallSum = findSmallestSum();
-                    System.out.println("Array with the smallest sum of numbers is: " + smallSum);
+                    PFArray smallSumArray = findArrayWithSmallestSum();
+                    System.out.println("Array with the smallest sum is: " + smallSumArray.getName() + " with count " + smallSumArray.sumNumbers());
                     System.out.println();
                 } else if (chosenOption == OptionWithArray.FINISH.optionId) {
                     System.out.println("Goodbye");
@@ -121,8 +121,8 @@ public class Main {
     }
 
     private static String chooseArrayName(Scanner scanner) {
-        String arrayName = "";
-        while(arrayName.isBlank()) {
+        String arrayName = null;
+        while(arrayName == null) {
             System.out.println("Please provide name of array you want to create:");
             arrayName = scanner.nextLine();
             for (PFArray pfArray : arrayStorage) {
@@ -132,7 +132,7 @@ public class Main {
                     if(chosenOption.equals("menu")) {
                         arrayName = "menu";
                     } else {
-                        arrayName = "";
+                        arrayName = null;
                     }
                 }
             }
@@ -141,13 +141,13 @@ public class Main {
     }
 
     private static String chooseArrayType(Scanner scanner) {
-        String chosenArrayType = "";
-        while(chosenArrayType.isBlank()) {
+        String chosenArrayType = null;
+        while(chosenArrayType == null) {
             System.out.println("Please write 'random' if you want to create array with random elements, or write 'manual' if you want to create array by yourself:");
             chosenArrayType = scanner.nextLine();
             if(!chosenArrayType.equals(RANDOM) && !chosenArrayType.equals(MANUAL)) {
                 System.err.println("The entered value is incorrect.");
-                chosenArrayType = "";
+                chosenArrayType = null;
             }
         }
         return chosenArrayType;
@@ -176,7 +176,7 @@ public class Main {
         int[] manualArray = new int[array.length];
         for (int i = 0; i < array.length; i++) {
             try {
-                manualArray[i] = Integer.valueOf(array[i]);
+                manualArray[i] = Integer.parseInt(array[i]);
             } catch (NumberFormatException e) {
                 System.err.println("Provided elements are incorrect.");
             }
@@ -211,23 +211,27 @@ public class Main {
         return actionWithArray;
     }
 
-    private static long findLargestSum() {
-        long largeSum = arrayStorage.get(0).sumNumbers();
+    private static PFArray findArrayWithLargestSum() {
+        PFArray largestArray = arrayStorage.get(0);
+        long largeSum = largestArray.sumNumbers();
         for(PFArray pfArray : arrayStorage) {
             if(pfArray.sumNumbers() >= largeSum) {
                 largeSum = pfArray.sumNumbers();
+                largestArray = pfArray;
             }
         }
-        return largeSum;
+        return largestArray;
     }
 
-    private static long findSmallestSum() {
-        long smallSum = Integer.MAX_VALUE;
+    private static PFArray findArrayWithSmallestSum() {
+        PFArray smallestArray = arrayStorage.get(0);
+        long smallSum = smallestArray.sumNumbers();
         for(PFArray pfArray : arrayStorage) {
             if(pfArray.sumNumbers() < smallSum) {
                 smallSum = pfArray.sumNumbers();
+                smallestArray = pfArray;
             }
         }
-        return smallSum;
+        return smallestArray;
     }
 }

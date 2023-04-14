@@ -57,21 +57,6 @@ public class PFArray {
         this.array=newArray;
     }
 
-    //Removing number with selected index from an array
-    public void removeSelNumberFromArray(int rmIndex) {
-
-        if (this.array == null || rmIndex < 0 || rmIndex >= this.array.length) {
-        }
-
-        int[] newArray = new int[this.array.length - 1];
-        for (int i = 0, k = 0; i < this.array.length; i++) {
-            if(i == rmIndex) {
-                continue;
-            }
-            newArray[k++]=this.array[i];
-        }
-        this.array=newArray;
-    }
 
     //Finding the largest number in the array
     public int getLargestNumber(){
@@ -86,7 +71,7 @@ public class PFArray {
 
     //Finding the smallest number in the array
     public int getSmallestNumber (){
-        int smallNum = Integer.MAX_VALUE;
+        int smallNum = array[0];
         for(int i = 0; i < this.array.length; i++) {
             if (this.array[i] < smallNum) {
                 smallNum = this.array[i];
