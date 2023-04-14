@@ -45,16 +45,12 @@ public class Main {
                     }
 
                 } else if (chosenOption == OptionWithArray.SELECT_ARRAY.optionId) {
-                    try {
                         if (arrayStorage.isEmpty()) {
                             System.err.println("There is not any available array. First create array, please.");
                             continue;
                         }
                         chooseArrayAction(scanner);
-                    } catch (InputMismatchException e) {
-                        System.err.println(TYPE_NUMBER_ERROR);
-                        scanner.nextLine();
-                    }
+
                 } else if (chosenOption == OptionWithArray.LARGEST_SUM.optionId) {
                     if (arrayStorage.isEmpty()) {
                         System.err.println("There is no available array to count sum. First create array, please.");
@@ -178,39 +174,43 @@ public class Main {
     }
 
     private static void chooseArrayAction(Scanner scanner) {
-
-        PFArray pfArray = selectArray(scanner);
-        System.out.println("Choose and type option from following:\n1 -to print selected array\n2 -to add number to the selected array\n3 -to remove number from the selected array\n4 -to find the largest number in selected array\n5 -to find the smallest number in selected array\n6 -to find sum of numbers in the selected array\n7 -to delete the selected array\n8 -to regenerate numbers in the selected array");
-        int actionWithArray = scanner.nextInt();
-        scanner.nextLine();
-
-        if (actionWithArray == ActionWithArray.PRINT_ARRAY.actionId) {
-            System.out.println(pfArray.toString() + "\n");
-        } else if (actionWithArray == ActionWithArray.ADD_NUMBER.actionId) {
-            System.out.println("Type number, that you want to add:" + "\n");
-            pfArray.addNumberToArray(scanner.nextInt());
+        try {
+            PFArray pfArray = selectArray(scanner);
+            System.out.println("Choose and type option from following:\n1 -to print selected array\n2 -to add number to the selected array\n3 -to remove number from the selected array\n4 -to find the largest number in selected array\n5 -to find the smallest number in selected array\n6 -to find sum of numbers in the selected array\n7 -to delete the selected array\n8 -to regenerate numbers in the selected array");
+            int actionWithArray = scanner.nextInt();
             scanner.nextLine();
-            System.out.println("Number is added. Updated array: " + pfArray.toString() + "\n");
-        } else if (actionWithArray == ActionWithArray.REMOVE_NUMBER.actionId) {
-            pfArray.removeNumberFromArray();
-            System.out.println("Number is removed. Updated array: " + pfArray.toString() + "\n");
-        } else if (actionWithArray == ActionWithArray.LARGEST_NUMBER.actionId) {
-            pfArray.getLargestNumber();
-            System.out.println("The largest number of selected array is: " + pfArray.getLargestNumber() + "\n");
-        } else if (actionWithArray == ActionWithArray.SMALLEST_NUMBER.actionId) {
-            pfArray.getSmallestNumber();
-            System.out.println("The smallest number of selected array is: " + pfArray.getSmallestNumber() + "\n");
-        } else if (actionWithArray == ActionWithArray.SUM_NUMBERS.actionId) {
-            pfArray.sumNumbers();
-            System.out.println("The sum of numbers of selected array is: " + pfArray.sumNumbers() + "\n");
-        } else if (actionWithArray == ActionWithArray.DELETE_ARRAY.actionId) {
-            pfArray.deleteArray();
-            System.out.println("The selected array is deleted" + "\n");
-        } else if (actionWithArray == ActionWithArray.REGENERATE_ARRAY.actionId) {
-            pfArray.regenerateArray();
-            System.out.println("Regenerated array: " + pfArray.toString() + "\n");
-        } else {
-            System.err.println(INCORRECT_VALUE_ERROR);
+
+            if (actionWithArray == ActionWithArray.PRINT_ARRAY.actionId) {
+                System.out.println(pfArray.toString() + "\n");
+            } else if (actionWithArray == ActionWithArray.ADD_NUMBER.actionId) {
+                System.out.println("Type number, that you want to add:" + "\n");
+                pfArray.addNumberToArray(scanner.nextInt());
+                scanner.nextLine();
+                System.out.println("Number is added. Updated array: " + pfArray.toString() + "\n");
+            } else if (actionWithArray == ActionWithArray.REMOVE_NUMBER.actionId) {
+                pfArray.removeNumberFromArray();
+                System.out.println("Number is removed. Updated array: " + pfArray.toString() + "\n");
+            } else if (actionWithArray == ActionWithArray.LARGEST_NUMBER.actionId) {
+                pfArray.getLargestNumber();
+                System.out.println("The largest number of selected array is: " + pfArray.getLargestNumber() + "\n");
+            } else if (actionWithArray == ActionWithArray.SMALLEST_NUMBER.actionId) {
+                pfArray.getSmallestNumber();
+                System.out.println("The smallest number of selected array is: " + pfArray.getSmallestNumber() + "\n");
+            } else if (actionWithArray == ActionWithArray.SUM_NUMBERS.actionId) {
+                pfArray.sumNumbers();
+                System.out.println("The sum of numbers of selected array is: " + pfArray.sumNumbers() + "\n");
+            } else if (actionWithArray == ActionWithArray.DELETE_ARRAY.actionId) {
+                pfArray.deleteArray();
+                System.out.println("The selected array is deleted" + "\n");
+            } else if (actionWithArray == ActionWithArray.REGENERATE_ARRAY.actionId) {
+                pfArray.regenerateArray();
+                System.out.println("Regenerated array: " + pfArray.toString() + "\n");
+            } else {
+                System.err.println(INCORRECT_VALUE_ERROR);
+            }
+        } catch (InputMismatchException e) {
+            System.err.println(TYPE_NUMBER_ERROR);
+            scanner.nextLine();
         }
 
     }
