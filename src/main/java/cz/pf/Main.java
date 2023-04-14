@@ -6,13 +6,14 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
 
     private static final ArrayList<PFArray> arrayStorage = new ArrayList<>();
     private static final String RANDOM = "random";
     private static final String MANUAL = "manual";
+    private static final String TYPE_NUMBER_ERROR = "Provided value is incorrect. Type number, please.";
+    private static final String INCORRECT_VALUE_ERROR = "The entered value is incorrect.\n";
 
 
     public static void main(String[] args) {
@@ -49,38 +50,9 @@ public class Main {
                             System.err.println("There is not any available array. First create array, please.");
                             continue;
                         }
-                        PFArray pfArray = selectArray(scanner);
-                        int actionWithArray = chooseArrayAction(scanner);
-                        if (actionWithArray == ActionWithArray.PRINT_ARRAY.actionId) {
-                            System.out.println(pfArray.toString() + "\n");
-                        } else if (actionWithArray == ActionWithArray.ADD_NUMBER.actionId) {
-                            System.out.println("Type number, that you want to add:" + "\n");
-                            pfArray.addNumberToArray(scanner.nextInt());
-                            scanner.nextLine();
-                            System.out.println("Number is added. Updated array: " + pfArray.toString() + "\n");
-                        } else if (actionWithArray == ActionWithArray.REMOVE_NUMBER.actionId) {
-                            pfArray.removeNumberFromArray();
-                            System.out.println("Number is removed. Updated array: " + pfArray.toString() + "\n");
-                        } else if (actionWithArray == ActionWithArray.LARGEST_NUMBER.actionId) {
-                            pfArray.getLargestNumber();
-                            System.out.println("The largest number of selected array is: " + pfArray.getLargestNumber() + "\n");
-                        } else if (actionWithArray == ActionWithArray.SMALLEST_NUMBER.actionId) {
-                            pfArray.getSmallestNumber();
-                            System.out.println("The smallest number of selected array is: " + pfArray.getSmallestNumber() + "\n");
-                        } else if (actionWithArray == ActionWithArray.SUM_NUMBERS.actionId) {
-                            pfArray.sumNumbers();
-                            System.out.println("The sum of numbers of selected array is: " + pfArray.sumNumbers() + "\n");
-                        } else if (actionWithArray == ActionWithArray.DELETE_ARRAY.actionId) {
-                            pfArray.deleteArray();
-                            System.out.println("The selected array is deleted" + "\n");
-                        } else if (actionWithArray == ActionWithArray.REGENERATE_ARRAY.actionId) {
-                            pfArray.regenerateArray();
-                            System.out.println("Regenerated array: " + pfArray.toString() + "\n");
-                        } else {
-                            System.err.println("The entered value is incorrect.\n");
-                        }
+                        chooseArrayAction(scanner);
                     } catch (InputMismatchException e) {
-                        System.err.println("Provided value is incorrect. Type number, please.");
+                        System.err.println(TYPE_NUMBER_ERROR);
                         scanner.nextLine();
                     }
                 } else if (chosenOption == OptionWithArray.LARGEST_SUM.optionId) {
@@ -103,10 +75,10 @@ public class Main {
                     System.out.println("Goodbye");
                     System.exit(0);
                 } else {
-                    System.err.println("The entered value is incorrect.\n");
+                    System.err.println(INCORRECT_VALUE_ERROR);
                 }
             } catch (InputMismatchException e) {
-                System.err.println("Provided value is incorrect. Type number, please.");
+                System.err.println(TYPE_NUMBER_ERROR);
                 scanner.nextLine();
             }
         }
@@ -147,7 +119,7 @@ public class Main {
             System.out.println("Please write 'random' if you want to create array with random elements, or write 'manual' if you want to create array by yourself:");
             chosenArrayType = scanner.nextLine();
             if(!chosenArrayType.equals(RANDOM) && !chosenArrayType.equals(MANUAL)) {
-                System.err.println("The entered value is incorrect.");
+                System.err.println(INCORRECT_VALUE_ERROR);
                 chosenArrayType = null;
             }
         }
@@ -163,7 +135,7 @@ public class Main {
                 scanner.nextLine();
                 return chosenSize;
             } catch (InputMismatchException e) {
-                System.err.println("Provided value is incorrect. Type number, please.");
+                System.err.println(TYPE_NUMBER_ERROR);
                 scanner.nextLine();
             }
         }
@@ -179,7 +151,7 @@ public class Main {
             try {
                 manualArray[i] = Integer.parseInt(array[i]);
             } catch (NumberFormatException e) {
-                System.err.println("Provided elements are incorrect.");
+                System.err.println(INCORRECT_VALUE_ERROR);
             }
 
         }
@@ -205,11 +177,42 @@ public class Main {
         }
     }
 
-    private static int chooseArrayAction(Scanner scanner) {
+    private static void chooseArrayAction(Scanner scanner) {
+
+        PFArray pfArray = selectArray(scanner);
         System.out.println("Choose and type option from following:\n1 -to print selected array\n2 -to add number to the selected array\n3 -to remove number from the selected array\n4 -to find the largest number in selected array\n5 -to find the smallest number in selected array\n6 -to find sum of numbers in the selected array\n7 -to delete the selected array\n8 -to regenerate numbers in the selected array");
         int actionWithArray = scanner.nextInt();
         scanner.nextLine();
-        return actionWithArray;
+
+        if (actionWithArray == ActionWithArray.PRINT_ARRAY.actionId) {
+            System.out.println(pfArray.toString() + "\n");
+        } else if (actionWithArray == ActionWithArray.ADD_NUMBER.actionId) {
+            System.out.println("Type number, that you want to add:" + "\n");
+            pfArray.addNumberToArray(scanner.nextInt());
+            scanner.nextLine();
+            System.out.println("Number is added. Updated array: " + pfArray.toString() + "\n");
+        } else if (actionWithArray == ActionWithArray.REMOVE_NUMBER.actionId) {
+            pfArray.removeNumberFromArray();
+            System.out.println("Number is removed. Updated array: " + pfArray.toString() + "\n");
+        } else if (actionWithArray == ActionWithArray.LARGEST_NUMBER.actionId) {
+            pfArray.getLargestNumber();
+            System.out.println("The largest number of selected array is: " + pfArray.getLargestNumber() + "\n");
+        } else if (actionWithArray == ActionWithArray.SMALLEST_NUMBER.actionId) {
+            pfArray.getSmallestNumber();
+            System.out.println("The smallest number of selected array is: " + pfArray.getSmallestNumber() + "\n");
+        } else if (actionWithArray == ActionWithArray.SUM_NUMBERS.actionId) {
+            pfArray.sumNumbers();
+            System.out.println("The sum of numbers of selected array is: " + pfArray.sumNumbers() + "\n");
+        } else if (actionWithArray == ActionWithArray.DELETE_ARRAY.actionId) {
+            pfArray.deleteArray();
+            System.out.println("The selected array is deleted" + "\n");
+        } else if (actionWithArray == ActionWithArray.REGENERATE_ARRAY.actionId) {
+            pfArray.regenerateArray();
+            System.out.println("Regenerated array: " + pfArray.toString() + "\n");
+        } else {
+            System.err.println(INCORRECT_VALUE_ERROR);
+        }
+
     }
 
     private static PFArray findArrayWithLargestSum() {
@@ -235,4 +238,5 @@ public class Main {
         }
         return smallestArray;
     }
+
 }
