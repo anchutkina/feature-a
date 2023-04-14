@@ -1,4 +1,4 @@
-name: SonarCloud
+name: Build and analyze
 on:
   push:
     branches:
@@ -18,7 +18,7 @@ jobs:
         with:
           java-version: 11
           distribution: 'zulu' # Alternative distribution options are available.
-      - name: Cache SonarCloud packages
+      - name: Cache SonarQube packages
         uses: actions/cache@v3
         with:
           path: ~/.sonar/cache

@@ -12,8 +12,9 @@ public class Main {
     private static final ArrayList<PFArray> arrayStorage = new ArrayList<>();
     private static final String RANDOM = "random";
     private static final String MANUAL = "manual";
-    private static final String TYPE_NUMBER_ERROR = "Provided value is incorrect. Type number, please.";
+    private static final String TYPED_NUMBER_ERROR = "Provided value is incorrect. Type number, please.";
     private static final String INCORRECT_VALUE_ERROR = "The entered value is incorrect.\n";
+    private static final String NO_AVAILABLE_ARRAY_ERROR = "There is not any available array. First create array, please.";
 
 
     public static void main(String[] args) {
@@ -46,14 +47,14 @@ public class Main {
 
                 } else if (chosenOption == OptionWithArray.SELECT_ARRAY.optionId) {
                         if (arrayStorage.isEmpty()) {
-                            System.err.println("There is not any available array. First create array, please.");
+                            System.err.println(NO_AVAILABLE_ARRAY_ERROR);
                             continue;
                         }
                         chooseArrayAction(scanner);
 
                 } else if (chosenOption == OptionWithArray.LARGEST_SUM.optionId) {
                     if (arrayStorage.isEmpty()) {
-                        System.err.println("There is no available array to count sum. First create array, please.");
+                        System.err.println(NO_AVAILABLE_ARRAY_ERROR);
                         continue;
                     }
                     PFArray largeSumArray = findArrayWithLargestSum();
@@ -61,7 +62,7 @@ public class Main {
                     System.out.println();
                 } else if (chosenOption == OptionWithArray.SMALLEST_SUM.optionId) {
                     if (arrayStorage.isEmpty()) {
-                        System.err.println("There is no available array to count sum. First create array, please.");
+                        System.err.println(NO_AVAILABLE_ARRAY_ERROR);
                         continue;
                     }
                     PFArray smallSumArray = findArrayWithSmallestSum();
@@ -74,7 +75,7 @@ public class Main {
                     System.err.println(INCORRECT_VALUE_ERROR);
                 }
             } catch (InputMismatchException e) {
-                System.err.println(TYPE_NUMBER_ERROR);
+                System.err.println(TYPED_NUMBER_ERROR);
                 scanner.nextLine();
             }
         }
@@ -100,8 +101,6 @@ public class Main {
                     String chosenOption = scanner.nextLine();
                     if(chosenOption.equals("menu")) {
                         arrayName = "menu";
-                    } else {
-                        arrayName = null;
                     }
                 }
             }
@@ -131,7 +130,7 @@ public class Main {
                 scanner.nextLine();
                 return chosenSize;
             } catch (InputMismatchException e) {
-                System.err.println(TYPE_NUMBER_ERROR);
+                System.err.println(TYPED_NUMBER_ERROR);
                 scanner.nextLine();
             }
         }
@@ -209,7 +208,7 @@ public class Main {
                 System.err.println(INCORRECT_VALUE_ERROR);
             }
         } catch (InputMismatchException e) {
-            System.err.println(TYPE_NUMBER_ERROR);
+            System.err.println(TYPED_NUMBER_ERROR);
             scanner.nextLine();
         }
 
