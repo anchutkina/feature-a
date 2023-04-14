@@ -18,9 +18,9 @@ public class PFArray {
 
     //Print array
     public String toString() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < this.array.length; i++) {
-            result += this.array[i] + " ";
+            result.append(this.array[i]).append(" ");
         }
         return this.name + ": " + result;
     }
@@ -42,7 +42,7 @@ public class PFArray {
     public void addNumberToArray(int newNumber) {
         int[] newArray = new int[this.array.length + 1];
         for (int i = 0; i < this.array.length; i++) {
-            newArray[i] = this.array[i];
+            newArray = Arrays.copyOf(this.array, this.array.length + 1);
         }
         newArray[newArray.length - 1] = newNumber;
         this.array = newArray;
@@ -51,8 +51,8 @@ public class PFArray {
     //Removing the last number from an array
     public void removeNumberFromArray() {
         int[] newArray = new int[this.array.length - 1];
-        for (int i = 0; i < this.array.length-1; i++) {
-                newArray[i] = this.array[i];
+        for (int i = 0; i < this.array.length - 1; i++) {
+                newArray = Arrays.copyOf(this.array, this.array.length - 1);
         }
         this.array=newArray;
     }
@@ -82,8 +82,7 @@ public class PFArray {
 
     //The sum of all elements in the array
     public long sumNumbers(){
-        long sum = Arrays.stream(this.array).asLongStream().sum();
-        return sum;
+        return Arrays.stream(this.array).asLongStream().sum();
     }
 
     //Deleting the entire array

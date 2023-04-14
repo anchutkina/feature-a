@@ -2,6 +2,7 @@ package cz.pf;
 
 import cz.pf.array.PFArray;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -9,9 +10,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
 
-    private static ArrayList<PFArray> arrayStorage = new ArrayList<>();
-    private final static String RANDOM = "random";
-    private final static String MANUAL = "manual";
+    private static final ArrayList<PFArray> arrayStorage = new ArrayList<>();
+    private static final String RANDOM = "random";
+    private static final String MANUAL = "manual";
 
 
     public static void main(String[] args) {
@@ -115,7 +116,7 @@ public class Main {
     public static int[] generateArrayRandomly(int size) {
         int[] arr = new int[size];
         for (int i = 0; i < size; i++) {
-            arr[i] = ThreadLocalRandom.current().nextInt();
+            arr[i] = new SecureRandom().nextInt();
         }
         return arr;
     }
