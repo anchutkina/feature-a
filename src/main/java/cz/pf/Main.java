@@ -5,13 +5,14 @@ import cz.pf.array.PFArray;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
 
     private static final ArrayList<PFArray> arrayStorage = new ArrayList<>();
-    private static final String RANDOM = "random";
-    private static final String MANUAL = "manual";
+    private static final String RANDOM = "1";
+    private static final String MANUAL = "2";
     private static final String TYPED_NUMBER_ERROR = "Provided value is incorrect. Type number, please.";
     private static final String INCORRECT_VALUE_ERROR = "The entered value is incorrect.\n";
     private static final String NO_AVAILABLE_ARRAY_ERROR = "There is not any available array. First create array, please.";
@@ -31,9 +32,9 @@ public class Main {
                         continue;
                     }
                     String type = chooseArrayType(scanner);
+
                     if (type.equals(RANDOM)) {
-                        int arraySize = chooseArraySize(scanner);
-                        PFArray pfArray = new PFArray(generateArrayRandomly(arraySize), name);
+                        PFArray pfArray = new PFArray(generateArrayRandomly(), name);
                         arrayStorage.add(pfArray);
                         System.out.println("Array is created:\n" + pfArray.toString());
                         System.out.println();
@@ -82,9 +83,10 @@ public class Main {
     }
 
 
-    public static int[] generateArrayRandomly(int size) {
-        int[] arr = new int[size];
-        for (int i = 0; i < size; i++) {
+    public static int[] generateArrayRandomly() {
+        Random rand = new Random();
+        int[] arr = new int[rand.nextInt(1000)];
+        for (int i = 0; i < arr.length; i++) {
             arr[i] = new SecureRandom().nextInt();
         }
         return arr;
@@ -101,6 +103,8 @@ public class Main {
                     String chosenOption = scanner.nextLine();
                     if(chosenOption.equals("menu")) {
                         arrayName = "menu";
+                    } else {
+                        arrayName = null;
                     }
                 }
             }
@@ -111,7 +115,7 @@ public class Main {
     private static String chooseArrayType(Scanner scanner) {
         String chosenArrayType = null;
         while(chosenArrayType == null) {
-            System.out.println("Please write 'random' if you want to create array with random elements, or write 'manual' if you want to create array by yourself:");
+            System.out.println("Please type:\n1 -to create array with random elements\n2 -to create array manually");
             chosenArrayType = scanner.nextLine();
             if(!chosenArrayType.equals(RANDOM) && !chosenArrayType.equals(MANUAL)) {
                 System.err.println(INCORRECT_VALUE_ERROR);
@@ -121,20 +125,6 @@ public class Main {
         return chosenArrayType;
     }
 
-    private static int chooseArraySize(Scanner scanner) {
-        int chosenSize = 0;
-        while (true) {
-            try {
-                System.out.println("Please provide size of array:");
-                chosenSize = scanner.nextInt();
-                scanner.nextLine();
-                return chosenSize;
-            } catch (InputMismatchException e) {
-                System.err.println(TYPED_NUMBER_ERROR);
-                scanner.nextLine();
-            }
-        }
-    }
 
     private static int[] generateArrayManually(Scanner scanner) {
         System.out.println("Please provide numbers to store in your array divided by space:");
@@ -156,60 +146,71 @@ public class Main {
 
     private static PFArray selectArray(Scanner scanner) {
         while(true) {
+            int arrayId = 1;
             System.out.println("Existing arrays:");
             for (PFArray pfArray : arrayStorage) {
-                System.out.println(pfArray.getName());
+                System.out.println(arrayId + " " + pfArray.getName());
+                arrayId++;
             }
 
-            System.out.println("Type name of array you want to work with:");
-            String arrayName = scanner.nextLine();
-            for (PFArray pfArray : arrayStorage) {
-                if (pfArray.getName().equals(arrayName)) {
-                    return pfArray;
+            System.out.println("Type number of array you want to work with:");
+            try {
+                int arrayNumber = scanner.nextInt();
+                scanner.nextLine();
+                if (arrayNumber < arrayId && arrayNumber > 0) {
+                    return arrayStorage.get(arrayNumber - 1);
                 }
+                System.err.println("Typed element was not found.");
+            } catch (InputMismatchException e) {
+                System.err.println(TYPED_NUMBER_ERROR);
+                scanner.nextLine();
             }
-            System.err.println("Typed element was not found.");
         }
     }
 
     private static void chooseArrayAction(Scanner scanner) {
-        try {
-            PFArray pfArray = selectArray(scanner);
-            System.out.println("Choose and type option from following:\n1 -to print selected array\n2 -to add number to the selected array\n3 -to remove number from the selected array\n4 -to find the largest number in selected array\n5 -to find the smallest number in selected array\n6 -to find sum of numbers in the selected array\n7 -to delete the selected array\n8 -to regenerate numbers in the selected array");
-            int actionWithArray = scanner.nextInt();
-            scanner.nextLine();
-
-            if (actionWithArray == ActionWithArray.PRINT_ARRAY.actionId) {
-                System.out.println(pfArray.toString() + "\n");
-            } else if (actionWithArray == ActionWithArray.ADD_NUMBER.actionId) {
-                System.out.println("Type number, that you want to add:" + "\n");
-                pfArray.addNumberToArray(scanner.nextInt());
+        PFArray pfArray = selectArray(scanner);
+        while(true) {
+            try {
+                System.out.println("Choose and type option from following:\n1 -to print selected array\n2 -to add number to the selected array\n3 -to remove number from the selected array\n4 -to find the largest number in selected array\n5 -to find the smallest number in selected array\n6 -to find sum of numbers in the selected array\n7 -to delete the selected array\n8 -to regenerate numbers in the selected array\n9 -to return to the main menu");
+                int actionWithArray = scanner.nextInt();
                 scanner.nextLine();
-                System.out.println("Number is added. Updated array: " + pfArray.toString() + "\n");
-            } else if (actionWithArray == ActionWithArray.REMOVE_NUMBER.actionId) {
-                pfArray.removeNumberFromArray();
-                System.out.println("Number is removed. Updated array: " + pfArray.toString() + "\n");
-            } else if (actionWithArray == ActionWithArray.LARGEST_NUMBER.actionId) {
-                pfArray.getLargestNumber();
-                System.out.println("The largest number of selected array is: " + pfArray.getLargestNumber() + "\n");
-            } else if (actionWithArray == ActionWithArray.SMALLEST_NUMBER.actionId) {
-                pfArray.getSmallestNumber();
-                System.out.println("The smallest number of selected array is: " + pfArray.getSmallestNumber() + "\n");
-            } else if (actionWithArray == ActionWithArray.SUM_NUMBERS.actionId) {
-                pfArray.sumNumbers();
-                System.out.println("The sum of numbers of selected array is: " + pfArray.sumNumbers() + "\n");
-            } else if (actionWithArray == ActionWithArray.DELETE_ARRAY.actionId) {
-                pfArray.deleteArray();
-                System.out.println("The selected array is deleted" + "\n");
-            } else if (actionWithArray == ActionWithArray.REGENERATE_ARRAY.actionId) {
-                pfArray.regenerateArray();
-                System.out.println("Regenerated array: " + pfArray.toString() + "\n");
-            } else {
-                System.err.println(INCORRECT_VALUE_ERROR);
+
+                if (actionWithArray == ActionWithArray.PRINT_ARRAY.actionId) {
+                    System.out.println(pfArray.toString() + "\n");
+                } else if (actionWithArray == ActionWithArray.ADD_NUMBER.actionId) {
+                    System.out.println("Type number, that you want to add:" + "\n");
+                    pfArray.addNumberToArray(scanner.nextInt());
+                    scanner.nextLine();
+                    System.out.println("Number is added. Updated array: " + pfArray.toString() + "\n");
+                } else if (actionWithArray == ActionWithArray.REMOVE_NUMBER.actionId) {
+                    pfArray.removeNumberFromArray();
+                    System.out.println("Number is removed. Updated array: " + pfArray.toString() + "\n");
+                } else if (actionWithArray == ActionWithArray.LARGEST_NUMBER.actionId) {
+                    pfArray.getLargestNumber();
+                    System.out.println("The largest number of selected array is: " + pfArray.getLargestNumber() + "\n");
+                } else if (actionWithArray == ActionWithArray.SMALLEST_NUMBER.actionId) {
+                    pfArray.getSmallestNumber();
+                    System.out.println("The smallest number of selected array is: " + pfArray.getSmallestNumber() + "\n");
+                } else if (actionWithArray == ActionWithArray.SUM_NUMBERS.actionId) {
+                    pfArray.sumNumbers();
+                    System.out.println("The sum of numbers of selected array is: " + pfArray.sumNumbers() + "\n");
+                } else if (actionWithArray == ActionWithArray.DELETE_ARRAY.actionId) {
+                    arrayStorage.remove(pfArray);
+                    System.out.println("The selected array is deleted" + "\n");
+                    break;
+                } else if (actionWithArray == ActionWithArray.REGENERATE_ARRAY.actionId) {
+                    pfArray.regenerateArray();
+                    System.out.println("Regenerated array: " + pfArray.toString() + "\n");
+                } else if (actionWithArray == ActionWithArray.RETURN_TO_MENU.actionId) {
+                    break;
+                } else {
+                    System.err.println(INCORRECT_VALUE_ERROR);
+                }
+            } catch (InputMismatchException e) {
+                System.err.println(TYPED_NUMBER_ERROR);
+                scanner.nextLine();
             }
-        } catch (InputMismatchException e) {
-            System.err.println(TYPED_NUMBER_ERROR);
-            scanner.nextLine();
         }
 
     }
