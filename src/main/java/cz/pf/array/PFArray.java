@@ -5,7 +5,6 @@ import cz.pf.Main;
 import java.util.Arrays;
 
 public class PFArray {
-
     private int[] array;
     private String name;
 
@@ -37,6 +36,7 @@ public class PFArray {
     public void setName(String name) {
         this.name = name;
     }
+
 
     //Adding a number to an array
     public void addNumberToArray(int newNumber) {
@@ -85,14 +85,10 @@ public class PFArray {
         return Arrays.stream(this.array).asLongStream().sum();
     }
 
-    //Deleting the entire array
-    public void deleteArray(){
-        this.array = new int[0];
-    }
 
     //Regenerating numbers in an array
     public int[] regenerateArray() {
-        this.array = Main.generateArrayRandomly(this.array.length);
+        this.array = Main.generateArrayRandomly();
         return this.array;
     }
 
